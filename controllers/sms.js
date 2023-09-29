@@ -13,7 +13,7 @@ exports.sendMessage=async (req,res,next)=>{
     const { to,message } = req.body;
     try {
     if (!isValidPhoneNumber(to)) {
-        console.log('phone: ',to)
+        // console.log('phone: ',to)
 
         return res.status(400).json({ error: 'Invalid phone number' });
     }

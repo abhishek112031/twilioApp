@@ -22,14 +22,14 @@ exports.makeCall = async (req, res, next) => {
         const call = await client.calls.create({
             from: process.env.TWILIO_PHONE_NUMBER,
             to,
-            url: 'http://demo.twilio.com/docs/voice.xml' // TwiML for the call/other host
+            url: process.env.TWILIOML // TwiML for the call/other host
         });
 
         // Respond with success
         res.status(200).json({ message: 'Call initiated successfully', callSid: call.sid });
     } catch (error) {
         // Handle errors
-        console.error(error);
+        // console.error(error);
         res.status(500).json({ error: 'An error occurred on the server' });
     }
 
