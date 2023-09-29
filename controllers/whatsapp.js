@@ -1,6 +1,9 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
+//importing validation function:
+const { isValidPhoneNumber } = require('../util/validation');
+
 const twilio = require('twilio');
 
 
@@ -10,6 +13,11 @@ exports.sendWhatsappMessage = async (req, res, next) => {
     const { to } = req.body;
 
     try {
+        if (!isValidPhoneNumber(to)) {
+            console.log('phone: ',to)
+    
+            return res.status(400).json({ error: 'Invalid phone number' });
+        }
         // Send a WhatsApp message
         await client.messages.create({
             body: 'This is a WhatsApp test message from Twilio-powered server!',

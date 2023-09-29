@@ -1,6 +1,9 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
+//importing validation function:
+const { isValidPhoneNumber } = require('../util/validation')
+
 const twilio = require('twilio');
 
 const client = new twilio.Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
@@ -8,8 +11,12 @@ const client = new twilio.Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWI
 
 exports.sendMessage=async (req,res,next)=>{
     const { to } = req.body;
-
     try {
+    if (!isValidPhoneNumber(to)) {
+        console.log('phone: ',to)
+
+        return res.status(400).json({ error: 'Invalid phone number' });
+    }
         // Send an SMS
         await client.messages.create({
             body: 'This is a test SMS from Twilio-powered server!',
