@@ -10,7 +10,7 @@ const client = new twilio.Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWI
 
 
 exports.sendMessage=async (req,res,next)=>{
-    const { to } = req.body;
+    const { to,message } = req.body;
     try {
     if (!isValidPhoneNumber(to)) {
         console.log('phone: ',to)
@@ -19,7 +19,7 @@ exports.sendMessage=async (req,res,next)=>{
     }
         // Send an SMS
         await client.messages.create({
-            body: 'This is a test SMS from Twilio-powered server!',
+            body: message,
             from: process.env.TWILIO_PHONE_NUMBER,
             to,
         });

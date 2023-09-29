@@ -10,7 +10,7 @@ const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID,  process.env.TW
 // const client = new twilio.Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 exports.sendWhatsappMessage = async (req, res, next) => {
-    const { to } = req.body;
+    const { to, message} = req.body;
 
     try {
         if (!isValidPhoneNumber(to)) {
@@ -21,7 +21,7 @@ exports.sendWhatsappMessage = async (req, res, next) => {
         // Send a WhatsApp message
         await client.messages.create({
             from: `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`,
-            body: 'This is a WhatsApp test message from Twilio-powered server!',
+            body: message,
             to: `whatsapp:${to}`,
         });
 
