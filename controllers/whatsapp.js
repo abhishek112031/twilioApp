@@ -25,6 +25,7 @@ exports.sendWhatsappMessage = async (req, res, next) => {
             to: `whatsapp:${to}`,
         });
 
+        
         // Respond with success
         res.status(200).json({ message: 'WhatsApp message sent successfully' });
     } catch (error) {

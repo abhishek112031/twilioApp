@@ -1,3 +1,4 @@
+const path=require('path');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -8,12 +9,18 @@ const twilio = require('twilio');
 
 const client = new twilio.Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
+exports.getMessagePage=async(req,res,next)=>{
+    res.status(200).sendFile(path.join(__dirname,'..','public','html','message.html'));
+}
+
 
 exports.sendMessage=async (req,res,next)=>{
     const { to,message } = req.body;
+    console.log(to,message)
     try {
     if (!isValidPhoneNumber(to)) {
         // console.log('phone: ',to)
+
 
         return res.status(400).json({ error: 'Invalid phone number' });
     }

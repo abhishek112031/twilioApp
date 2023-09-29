@@ -1,0 +1,34 @@
+   /* Custom CSS for styling */
+   body {
+    background-color: #222;
+    color: #fff;
+}
+
+.container {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    color: #fff;
+}
+
+select.form-control,
+input.form-control,
+textarea.form-control {
+    background-color: #444;
+    color: #fff;
+    border-color: #444;
+}
+
+.btn-primary {
+    background-color: #007BFF;
+    border-color: #007BFF;
+}
