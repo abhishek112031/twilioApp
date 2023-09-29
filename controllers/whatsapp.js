@@ -4,10 +4,10 @@ dotenv.config();
 //importing validation function:
 const { isValidPhoneNumber } = require('../util/validation');
 
-const twilio = require('twilio');
+// const twilio = require('twilio');
 
-
-const client = new twilio.Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID,  process.env.TWILIO_AUTH_TOKEN);
+// const client = new twilio.Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 exports.sendWhatsappMessage = async (req, res, next) => {
     const { to } = req.body;
@@ -20,8 +20,8 @@ exports.sendWhatsappMessage = async (req, res, next) => {
         }
         // Send a WhatsApp message
         await client.messages.create({
-            body: 'This is a WhatsApp test message from Twilio-powered server!',
             from: `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`,
+            body: 'This is a WhatsApp test message from Twilio-powered server!',
             to: `whatsapp:${to}`,
         });
 

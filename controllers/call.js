@@ -20,9 +20,9 @@ exports.makeCall = async (req, res, next) => {
         }
         // Make a call
         const call = await client.calls.create({
-            url: 'http://demo.twilio.com/docs/voice.xml', // TwiML for the call/other host
-            to,
             from: process.env.TWILIO_PHONE_NUMBER,
+            to,
+            url: 'http://demo.twilio.com/docs/voice.xml' // TwiML for the call/other host
         });
 
         // Respond with success
