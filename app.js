@@ -22,7 +22,7 @@ app.post('/sms', async (req, res) => {
     try {
         // Send an SMS
         await client.messages.create({
-            body: 'This is a test SMS from your Twilio-powered server!',
+            body: 'This is a test SMS from Twilio-powered server!',
             from: process.env.TWILIO_PHONE_NUMBER,
             to,
         });
@@ -51,6 +51,27 @@ app.post('/call', async (req, res) => {
 
         // Respond with success
         res.status(200).json({ message: 'Call initiated successfully', callSid: call.sid });
+    } catch (error) {
+        // Handle errors
+        console.error(error);
+        res.status(500).json({ error: 'An error occurred on the server' });
+    }
+});
+
+// Route to send a WhatsApp message
+app.post('/whatsapp', async (req, res) => {
+    const { to } = req.body;
+
+    try {
+        // Send a WhatsApp message
+        await client.messages.create({
+            body: 'This is a WhatsApp test message from Twilio-powered server!',
+            from: `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`,
+            to: `whatsapp:${to}`,
+        });
+
+        // Respond with success
+        res.status(200).json({ message: 'WhatsApp message sent successfully' });
     } catch (error) {
         // Handle errors
         console.error(error);
