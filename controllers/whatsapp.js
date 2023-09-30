@@ -13,25 +13,26 @@ exports.sendWhatsappMessage = async (req, res, next) => {
     const { to, message } = req.body;
 
     try {
-        if (!isValidPhoneNumber(to)) {
-            // console.log('phone: ',to)
+        if (await isValidPhoneNumber(to)) {
 
-            return res.status(400).json({ error: 'Invalid phone number' });
+            // Send a WhatsApp message
+            await client.messages.create({
+                from: `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`,
+                body: message,
+                to: `whatsapp:${to}`,
+            });
+            // Respond with success
+            res.status(200).json({ message: 'WhatsApp message sent successfully' });
         }
-        // Send a WhatsApp message
-        await client.messages.create({
-            from: `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`,
-            body: message,
-            to: `whatsapp:${to}`,
-        });
 
-        
-        // Respond with success
-        res.status(200).json({ message: 'WhatsApp message sent successfully' });
+
     } catch (error) {
         // Handle errors
-        console.error(error);
-        res.status(500).json({ error: 'An error occurred on the server' });
+        if(error.status==404 ||error.status==400 ) {
+            return  res.status(400).json({ error: 'Invalid Phone Number' })
+          }
+         
+          res.status(500).json({ error: 'An error occurred on the server'});
     }
 
 

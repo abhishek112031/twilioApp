@@ -21,7 +21,7 @@ async function postMessage(event) {
 
     }
     catch (err) {
-        // console.log(err)
+        console.log(err);
         alert(err.response.data.error)
     }
 
